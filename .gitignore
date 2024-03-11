@@ -1,0 +1,7 @@
+src/node_modules
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/settings.json
+src/server.pid
+src/*.pid
+server.pid
