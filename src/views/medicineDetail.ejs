@@ -1,0 +1,119 @@
+<%- include("partials/header"); %>
+
+<body>
+
+<div class="row">
+  <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+    <!-- Sidebar -->
+    <h3>Xem thêm:</h3>
+    <% medicineDetail.forEach((med)=>{%>
+
+    <a href="/medicineList/">
+      <button class="btn btn-secondary">Back</button>
+  </a>  
+   
+
+  </div>
+
+
+
+  <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+    <div class="container-xl px-4 mt-4">
+      <div class="row">
+        
+        <div class="col-xl-8"style="right:100px;position: absolute;">
+          <!-- Account details card-->
+          <div class="card mb-4 w-100">
+            <div class="card-header">Chi tiết thuốc</div>
+            <div class="card-body">
+              <form action="/medicineDetail/<%= med.MEDICINE_ID %>" method="POST" id="myForm">               
+                 <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+
+                    <label class="small mb-1" for="medicine_id">Mã thuốc</label> 
+                    <input type="text" id="medicine_id" name="medicine_id" class="form-control form-control-lg" value="<%= med.MEDICINE_ID %>" disabled>
+                    <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="name">Tên thuốc</label>
+                    <input type="text" id="name" name="name" class="form-control form-control-lg" value="<%= med.NAME %>" disabled>
+                    <!-- <% if (locals.errorMessage2) { %>
+                      <div class="small text-danger"><%= errorMessage2 %></div>
+                    <% } %> -->
+                  </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+
+                    <label class="small mb-1" for="INVENTORY">Hàng tồn kho</label> 
+                    <input type="number" id="INVENTORY" name="INVENTORY" class="form-control form-control-lg" value="<%= med.INVENTORY %>" required disabled>
+                    <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="price">Thêm số lượng</label>
+                    <input type="number" id="inputNumber" name="inputNumber" class="form-control form-control-lg"  disabled>
+                    <!-- <% if (locals.errorMessage2) { %>
+                      <div class="small text-danger"><%= errorMessage2 %></div>
+                    <% } %> -->
+                  </div>
+                </div>
+     
+                </div>          
+                <div class="mb-3">
+                  <label class="small mb-1" for="fix">Fix hay không</label>
+                  <input type="text" id="fix" name="fix" class="form-control form-control-lg" >
+                </div>  
+                <div class="mb-3">
+                  <label class="small mb-1" for="description">Mô tả thuốc</label>
+                  <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg" rows="2"><%= med.DESCRIPTION %></textarea>
+                </div>
+                <% }) %>
+                <%if(role =="admin"){%>
+
+                  <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                  <%}else{%>
+                    <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
+                    <%}%>
+
+                
+              </form>
+              <br><br>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("updateButton").addEventListener("click", function () {
+    var formElements = document.querySelectorAll("form input, form textarea");
+    var updateButton = document.getElementById("updateButton");
+  
+    if (updateButton.textContent === "Update") {
+      formElements.forEach(function (element) {
+        if (element.id !== "medicine_id" && element.id !== "name" && element.id !== "price" && element.id !== "description" && element.id !== "INVENTORY") {
+          element.removeAttribute("disabled");
+        }
+      });
+  
+      updateButton.textContent = "Done";
+    } else if (updateButton.textContent === "Done") {
+      document.getElementById("myForm").submit();
+      formElements.forEach(function (element) {
+        element.setAttribute("disabled", true);
+      });
+  
+      updateButton.textContent = "Update";
+    }
+  });
+  
+  </script>
+  
+</body>

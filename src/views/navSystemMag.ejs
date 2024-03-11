@@ -1,0 +1,53 @@
+<%- include("partials/header"); %>
+
+<body>
+
+<div class="row">
+  <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+    <!-- Sidebar -->
+    <h3>Xem thêm:</h3>
+
+    <a href="/dentistList/">
+      <button class="btn btn-secondary">Danh sách nha sĩ</button>
+  </a>  
+   
+  <h5>ㅤ</h5><a href="/staffList/">
+    <button class="btn btn-secondary">Danh sách nhân viên</button></a>
+
+  </div>
+
+
+  
+</div>
+
+<script>
+  document.getElementById("updateButton").addEventListener("click", function () {
+    var formElements = document.querySelectorAll("form input, form textarea, form select");
+    var updateButton = document.getElementById("updateButton");
+    var descriptionTextarea = document.getElementById("description");
+  
+    if (updateButton.textContent === "Update") {
+      formElements.forEach(function (element) {
+        if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid" && element.id !== "DOB" && element.id !== "patientName" && element.id !== "Gender") {
+          element.removeAttribute("disabled");
+        }
+      });
+  
+      // Enable the description textarea
+      descriptionTextarea.removeAttribute("disabled");
+  
+      updateButton.textContent = "Done";
+    } else if (updateButton.textContent === "Done") {
+      formElements.forEach(function (element) {
+        element.setAttribute("disabled", true);
+      });
+  
+      // Disable the description textarea
+      descriptionTextarea.setAttribute("disabled", true);
+  
+      updateButton.textContent = "Update";
+    }
+  });
+  </script>
+  
+</body>

@@ -1,0 +1,168 @@
+<%- include("partials/header"); %>
+
+<body>
+
+<div class="row">
+  <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+    <!-- Sidebar -->
+    <h3>Xem thêm:</h3>
+    <% dentistDetail.forEach((pat)=>{%>
+
+    <a href="/dentistList/">
+      <button class="btn btn-secondary">Back</button>
+  </a>  
+   
+
+  </div>
+
+
+
+  <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+    <div class="container-xl px-4 mt-4">
+      <div class="row">
+        
+        <div class="col-xl-8"style="right:100px;position: absolute;">
+          <!-- Account details card-->
+          <div class="card mb-4 w-100">
+            <div class="card-header">Chi tiết nha sĩ</div>
+            <div class="card-body">
+              <form action="" method="post">               
+                 <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+
+                    <label class="small mb-1" for="DENTIST_ID">ID</label> 
+                    
+
+                    <input type="text" id="DENTIST_ID" class="form-control form-control-lg" value="<%= pat.DENTIST_ID %>" disabled>
+                    <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="FULL_NAME">Họ tên</label>
+                    <input type="text" id="FULL_NAME"class="form-control form-control-lg" value="<%= pat.FULL_NAME %>" disabled>
+                    <!-- <% if (locals.errorMessage2) { %>
+                      <div class="small text-danger"><%= errorMessage2 %></div>
+                    <% } %> -->
+                  </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="DOB">Ngày sinh</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat.DOB.toLocaleDateString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>" disabled>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Gender">Giới tính</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat.GENDER %>" disabled>
+                  </div>
+                  
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="CLINIC">Địa chỉ làm việc</label>
+                        <textarea id="CLINIC" name="CLINIC" class="form-control form-control-lg" rows="1" disabled><%= pat.CLINIC_ADDRESS %></textarea>
+                      </div>
+                    </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="EMAIL">Email</label>
+                    <input type="text" id="EMAIL"class="form-control form-control-lg" value="<%= pat.EMAIL %>" disabled>
+                  </div>
+                </div>   
+                <div
+                          style="background-color: grey;height: 1px;width: 100%;margin-top: 50px;margin-bottom: 30px;">
+                        </div>
+                Chi tiết lịch làm việc
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="DOB">Thứ 2</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= dentistDetail2[0].SHIFT %>" disabled>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Gender">Thứ 3</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= dentistDetail2[1].SHIFT %>" disabled>
+                  </div>
+
+
+                 
+                </div>  
+                
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="DOB">Thứ 4</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= dentistDetail2[2].SHIFT %>" disabled>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Gender">Thứ 5</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= dentistDetail2[3].SHIFT %>" disabled>
+                  </div>
+
+
+                 
+                </div> <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="DOB">Thứ 6</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= dentistDetail2[4].SHIFT %>" disabled>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Gender">Thứ 7</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= dentistDetail2[5].SHIFT %>" disabled>
+                  </div>
+
+
+                 
+                </div> 
+                <div class="mb-3">
+                  <label class="small mb-1" for="NOTES">Ghi chú</label>
+                  <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg" rows="2"><%= pat.NOTES %></textarea>
+                </div>
+                <% }) %>
+                <%if(role =="admin"){%>
+
+                  <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                  <%}else{%>
+                    <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
+                    <%}%>
+
+                
+              </form>
+              <br><br>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("updateButton").addEventListener("click", function () {
+    var formElements = document.querySelectorAll("form input, form textarea, form select");
+    var updateButton = document.getElementById("updateButton");
+    var descriptionTextarea = document.getElementById("description");
+  
+    if (updateButton.textContent === "Update") {
+      formElements.forEach(function (element) {
+        if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid" && element.id !== "DOB" && element.id !== "patientName" && element.id !== "Gender") {
+          element.removeAttribute("disabled");
+        }
+      });
+  
+      // Enable the description textarea
+      descriptionTextarea.removeAttribute("disabled");
+  
+      updateButton.textContent = "Done";
+    } else if (updateButton.textContent === "Done") {
+      formElements.forEach(function (element) {
+        element.setAttribute("disabled", true);
+      });
+  
+      // Disable the description textarea
+      descriptionTextarea.setAttribute("disabled", true);
+  
+      updateButton.textContent = "Update";
+    }
+  });
+  </script>
+  
+</body>

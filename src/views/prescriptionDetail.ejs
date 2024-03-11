@@ -1,0 +1,99 @@
+<%- include("partials/header"); %>
+
+<body>
+<% prescriptionDetail.slice(0, 1).forEach((pat)=>{%>
+<div class="row">
+  <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+    <!-- Sidebar -->
+    <h3>Xem thêm:</h3>
+    <a href="/precriptionList/<%= pat.TREATMENT_ID %>">
+      <button class="btn btn-secondary">Về lại d/s đơn thuốc</button>
+  </a>  
+  </div>
+
+  <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+    <div class="container-xl px-4 mt-4">
+      <div class="row">
+        
+        <div class="col-xl-8"style="right:100px;position: absolute;">
+          <!-- Account details card-->
+          <div class="card mb-4 w-100">
+            <div class="card-header">Chi tiết đơn thuốc</div>
+            <div class="card-body">
+              <form action="" method="post">               
+                 <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+
+                    <label class="small mb-1" for="patientID">ID</label> 
+
+                    <input type="text" id="patientID" class="form-control form-control-lg" value="<%= pat.PRESCRIPTION_ID %>" disabled>
+                    <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="patientName">Số loại thuốc </label>
+                    <input type="text" id="patientName"class="form-control form-control-lg" value="<%= pat.Number_of_distinct_medicine %>" disabled>
+                    <!-- <% if (locals.errorMessage2) { %>
+                      <div class="small text-danger"><%= errorMessage2 %></div>
+                    <% } %> -->
+                  </div>
+                </div>
+                
+                <% prescriptionDetail.forEach((pat2)=>{%>
+                <div class="row gx-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="DOB">Tên thuốc</label>
+                    <input type="text" id="DOB"class="form-control form-control-lg" value="<%= pat2.NAME%>" disabled>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-1" for="Gender">Số lượng</label>
+                    <input type="text" id="Gender"class="form-control form-control-lg" value="<%= pat2.QUANTITY%>" disabled>
+                  </div>
+                  
+                </div>
+                
+                <div class="mb-3">
+                  <label class="small mb-1" for="description">Mô tả về thuốc</label>
+                  <textarea disabled id="description" name="description" class="form-control form-control-lg" rows="2"><%= pat2.DESCRIPTION %></textarea>
+                </div>
+                <% }) %>
+                <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+
+                
+              </form>
+              <br><br>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% }) %>
+<script>
+document.getElementById("updateButton").addEventListener("click", function () {
+  var formElements = document.querySelectorAll("form input, form textarea");
+  var updateButton = document.getElementById("updateButton");
+
+  if (updateButton.textContent === "Update") {
+    formElements.forEach(function (element) {
+      if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid"&& element.id !== "DOB"&& element.id !== "patientName"&& element.id !== "description") {
+        element.removeAttribute("disabled");
+      }
+    });
+
+    updateButton.textContent = "Done";
+  } else if (updateButton.textContent === "Done") {
+    formElements.forEach(function (element) {
+      element.setAttribute("disabled", true);
+    });
+
+    updateButton.textContent = "Update";
+  }
+});
+
+
+</script>
+</body>

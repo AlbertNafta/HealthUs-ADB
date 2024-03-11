@@ -1,0 +1,151 @@
+<%- include("partials/header"); %>
+
+<body>
+
+  <div class="row">
+    <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+      <!-- Sidebar -->
+      <h3>Xem thêm:</h3>
+    </div>
+
+    <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+      <div class="container-xl px-4 mt-4">
+        <div class="row">
+
+          <div class="col-xl-8" style="right:100px;position: absolute;">
+            <!-- Account details card-->
+            <div class="card mb-4 w-100">
+              <div class="card-header">Thêm cuộc hẹn mới</div>
+              <div class="card-body">
+                <form action="/appointAdd" method="POST" id="myForm">
+                    <% treatmentDetail.forEach((pat)=>{%>
+
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+  
+                          <label class="small mb-1" for="patientID">ID</label>
+  
+  
+                          <input type="text" id="TREATMENT_ID" name="TREATMENT_ID" class="form-control form-control-lg"
+                            value="<%= pat.TREATMENT_ID %>" required readonly>
+                          <!-- <% if (locals.errorMessage1) { %>
+                        <div class="small text-danger"><%= errorMessage1%></div>
+                      <% } %> -->
+                        </div>
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="DentistName"><a href="/dentistDetail/<%= pat.DENTIST_ID %>"
+                              style="text-decoration: none;color: black;">Nha sĩ chính</a></label>
+                          <input type="text" id="DentistName" name="DentistName" class="form-control form-control-lg"
+                            value="<%= pat.DentistName %>" disabled>
+                          <!-- <% if (locals.errorMessage2) { %>
+                        <div class="small text-danger"><%= errorMessage2 %></div>
+                      <% } %> -->
+                        </div>
+                      </div>
+                      <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="AssistantName"><a href="/dentistDetail/<%= pat.ASSISTANT_ID %>"
+                              style="text-decoration: none;color: black;">Nha sĩ phụ</a></label>
+                          <input type="text" id="AssistantName" name="AssistantName" class="form-control form-control-lg"
+                            value="<%= pat.AssistantName %>" disabled>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="PatientName"><a href="/patientProfile/<%= pat.PATIENT_ID %>"
+                              style="text-decoration: none;color: black;">Bệnh nhân được điều trị</a></label>
+                          <input type="text" id="PatientName" class="form-control form-control-lg"
+                            value="<%= pat.PatientName %>" disabled>
+                        </div>
+  
+                      </div>
+                      <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="treatmentStatus">Tình trạng điều trị</label>
+                          <select id="treatmentStatus" name="treatmentStatus" class="form-control form-control-lg"
+                            disabled>
+                            <option value="<%=pat.TREATMENT_STATUS%>" selected>
+                              <%=pat.TREATMENT_STATUS%>
+                            </option>
+                            <option value="Completed">Completed</option>
+                            <option value="In progress">In progress</option>
+                            <option value="Canceled">Canceled</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="APPOINTMENT_DATE"><a
+                              href="/appointmentDetail/<%= pat.TREATMENT_ID %>/APP01"
+                              style="text-decoration: none;color: black;">Ngày điều trị đầu tiên</a> </label>
+                          <input type="text" id="APPOINTMENT_DATE" class="form-control form-control-lg"
+                            value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>"
+                            disabled>
+                        </div>
+                      </div>
+  
+  
+  
+                  </div>
+  
+  
+                  <div class="mb-3">
+                    <label class="small mb-1" for="description">Mô tả điều trị</label>
+                    <textarea disabled id="description" name="description" class="form-control form-control-lg"
+                      rows="2"><%= pat.DESCRIPTION %></textarea>
+                  </div>
+  
+
+                  <div class="mb-3">
+                    <label class="small mb-1" for="ClinicAddress">Nơi khám</label>
+                    <textarea disabled id="ClinicAddress" name="ClinicAddress" class="form-control form-control-lg"
+                      rows="2"><%= pat.ClinicAddress %></textarea>
+                  </div>
+                  <% }) %>
+               
+                  <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="dob">Ngày hẹn</label>
+                      <input type="date" id="dob" name="dob" class="form-control form-control-lg" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="gender">Thuộc ca</label>
+                      <input type="text" id="gender" name="gender" class="form-control form-control-lg" required>
+                    </div>
+
+                  </div>
+                  <div class="row gx-3 mb-3">
+               
+                      <label class="small mb-1" for="allergies">Miêu tả cuộc hẹn</label>
+                      <input type="text" id="allergies" name="allergies" class="form-control form-control-lg" rows="3"required >
+               
+                  </div>
+                  <button id="updateButton" class="btn btn-primary" type="submit">Thêm</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    document.getElementById("updateButton").addEventListener("click", function() {
+      var formElements = document.querySelectorAll("form input, form textarea");
+      var updateButton = document.getElementById("updateButton");
+
+      if (updateButton.textContent === "Update") {
+        formElements.forEach(function(element) {
+          if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid" && element.id !== "contraindication" && element.id !== "" && element.id !== "description") {
+            element.removeAttribute("disabled");
+          }
+        });
+
+        updateButton.textContent = "Done";
+      } else if (updateButton.textContent === "Done") {
+        document.getElementById("myForm").submit();
+        formElements.forEach(function(element) {
+          element.setAttribute("disabled", true);
+        });
+
+        updateButton.textContent = "Update";
+      }
+    });
+  </script> -->
+</body>

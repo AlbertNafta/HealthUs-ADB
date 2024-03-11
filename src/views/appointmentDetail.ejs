@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Open Sans Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- FontAweSome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <!-- Styles.css -->
+  <!-- <link rel="stylesheet" href="/css/stylesHome.css" type="text/css"/> -->
+  <!-- <link rel="stylesheet" href="/css/styleManage.css" type="text/css"/> -->
+  <link rel="stylesheet" href="../public/css/stylesUpload.css" type="text/css" />
+  <link rel="stylesheet" href="../public/css/avtDropDown.css" type="text/css" />
+  <!-- Tiny ediotr -->
+  <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  <title>Health Us</title>
+  <nav class="navbar navbar-expand-lg bg-transparent">
+    <div class="container-fluid" style="background-color: #dcfffd;">
+      <a class="navbar-brand" href="/">
+        <img class="rounded-2" src="../../public/image/logo.png" alt="Bootstrap" width="60" height="40">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+        <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+          <li class="nav-item rounded-3">
+            <b><a class="nav-link" href="/patientList">Quản lý bệnh nhân</a></b>
+          </li>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown"
+              aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+              <b>Quản lý cuộc hẹn</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 180px;">
+              <li><a class="btn" href="/appointListAll" role="button">Danh sách cuộc hẹn</a></li>
+              <li><a class="btn" href="/requestList" role="button">Danh sách yêu cầu</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle nav-link" data-bs-toggle="dropdown"
+              aria-expanded="false" style="background-color: transparent; color: rgb(82, 82, 82); border: none;">
+              <b>Quản lý nhân viên</b>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" style="background-color: #ffffff;width: 190px;">
+              <li><a class="btn" href="/dentistList" role="button">Danh sách nha sĩ</a></li>
+              <li><a class="btn" href="/staffList" role="button">Danh sách nhân viên</a></li>
+            </ul>
+          </div>
+
+          <li class="nav-item rounded-3">
+            <b><a class="nav-link" href="/medicineList">Quản lý thuốc</a></b>
+          </li>
+          <li class="nav-item rounded-3">
+            <b><a class="nav-link" href="/appointListAllSta">Quản lý thống kê</a></b>
+          </li>
+          <div style="width: 354px;"></div>
+          <!-- ======================================================================================================== -->
+
+        </ul>
+      </div>
+
+      <script>
+        let profile = document.querySelector(".profile");
+        let menu = document.querySelector(".menu");
+        let userProfile = document.querySelector(".user-profile");
+
+        document.onclick = function (e) {
+          if (!profile.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove("active");
+          }
+        };
+
+        profile.onclick = function (e) {
+          menu.classList.toggle("active");
+        };
+
+        function hoverOn(e) {
+          e.style.color = "#36a189";
+        }
+
+        function hoverOff(e) {
+          e.style.color = "rgb(72, 72, 72)";
+        }
+      </script>
+      </li>
+
+      </ul>
+
+
+    </div>
+    </div>
+
+  </nav>
+</head>
+
+<body>
+
+
+  <div class="row">
+    <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2"
+      style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+      <!-- Sidebar -->
+      <h3>Xem thêm:</h3>
+      <% appointmentDetail.forEach((pat)=>{%>
+        <a href="/appointmentList/<%= pat.TREATMENT_ID %>">
+          <button class="btn btn-secondary">Back</button>
+        </a>
+
+    </div>
+
+    <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+      <div class="container-xl px-4 mt-4">
+        <div class="row">
+
+          <div class="col-xl-8" style="right:100px;position: absolute;">
+            <!-- Account details card-->
+            <div class="card mb-4 w-100">
+              <div class="card-header">Chi tiết cuộc hẹn</div>
+              <div class="card-body">
+                <form action="/appointmentDetail/<%= pat.TREATMENT_ID%>/<%=pat.APPOINTMENT_ID%>" method="POST"
+                  id="myForm">
+                  <% appointmentDetail1.forEach((pat2)=>{%>
+
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+
+                        <label class="small mb-1" for="patient_id">Số điện thoại</label>
+
+                        <input type="text" id="patient_id" class="form-control form-control-lg"
+                          value="<%= pat2.PATIENT_ID %>" disabled>
+                        <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1" for="full_name">Họ và tên</label>
+                        <input type="text" id="full_name" class="form-control form-control-lg"
+                          value="<%= pat2.FULL_NAME %>" required disabled>
+                      </div>
+                    </div>
+                    <%function calculateAge(dateOfBirth) { const dob=new Date(dateOfBirth); const today=new Date(); let
+                      age=today.getFullYear() - dob.getFullYear(); const monthDiff=today.getMonth() - dob.getMonth(); if
+                      (monthDiff < 0 || (monthDiff===0 && today.getDate() < dob.getDate())) { age--; } return age; }%>
+                      <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="DOB">Tuổi</label>
+                          <input type="text" id="DOB" class="form-control form-control-lg"
+                            value="<%= calculateAge(pat2.DOB) %>" disabled>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="gender">Giới tính</label>
+                          <%if(pat2.GENDER=="M" ){%>
+                            <input type="text" id="gender" class="form-control form-control-lg" value="Nam" required
+                              disabled>
+                            <%}%>
+                              <%if(pat2.GENDER=="F" ){%>
+                                <input type="text" id="gender" class="form-control form-control-lg" value="Nữ" required
+                                  disabled>
+                                <%}%>
+                        </div>
+
+                      </div>
+                      <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="allergies">Tình trạng dị ứng</label>
+                          <input type="text" id="allergies" class="form-control form-control-lg" rows="1"
+                            value="<%= pat2.ALLERGIES%>" required disabled>
+                        </div>
+
+                      </div>
+                      <div style="background-color: grey;height: 1px;width: 100%;margin-top: 50px;margin-bottom: 30px;">
+                      </div>
+                      <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+
+                          <label class="small mb-1" for="TREATMENT_ID"><a href="/treatment/<%= pat.TREATMENT_ID %>"
+                              style="text-decoration: none;color: black;">Cuộc điều trị</a> </label>
+
+                          <input type="text" id="TREATMENT_ID" name="TREATMENT_ID" class="form-control form-control-lg"
+                            value="<%= pat.TREATMENT_ID %>" required disabled>
+                          <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                        </div>
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="APPOINTMENT_ID">Lần hẹn</label>
+                          <input type="text" id="APPOINTMENT_ID" name="APPOINTMENT_ID"
+                            class="form-control form-control-lg" value="<%=pat.APPOINTMENT_ID.slice(-2)%>" required
+                            disabled>
+                        </div>
+                      </div>
+                      <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="APPOINTMENT_DATE">Ngày hẹn</label>
+                          <input type="date" id="APPOINTMENT_DATE" name="APPOINTMENT_DATE"
+                            class="form-control form-control-lg"
+                            value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit' })%>"
+                            required disabled>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="APPOINTMENT_SHIFT">Thuộc ca</label>
+                          <input type="text" id="APPOINTMENT_SHIFT" name="APPOINTMENT_SHIFT"
+                            class="form-control form-control-lg" value="<%= pat.APPOINTMENT_SHIFT%>" required disabled>
+                        </div>
+
+                      </div>
+                      <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="APPOINTMENT_STATUS">Loại cuộc hẹn</label>
+                          <input type="text" id="APPOINTMENT_STATUS" name="APPOINTMENT_STATUS"
+                            class="form-control form-control-lg" rows="1" value="<%= pat.APPOINTMENT_STATUS%>" required
+                            disabled>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="DESCRIPTION"><a href="/treatment/<%= pat.TREATMENT_ID %>"
+                              style="text-decoration: none;color: black;">Miêu tả điều trị</a></label>
+                          <input type="text" id="DESCRIPTION" name="DESCRIPTION" class="form-control form-control-lg"
+                            rows="1" value="<%= pat2.DESCRIPTION%>" required disabled>
+                        </div>
+                        <% }) %>
+                      </div>
+                      <div class="mb-3">
+                        <label class="small mb-1" for="NOTES">Mô tả cuộc hẹn</label>
+                        <textarea disabled id="NOTES" name="NOTES" class="form-control form-control-lg"
+                          rows="2"><%= pat.NOTES %></textarea>
+                      </div>
+                      <!-- <div class="mb-3">
+                      <label class="small mb-1" for="fix">Fix hay khong</label>
+                    <input type="text" id="fix" name="fix" class="form-control form-control-lg"
+                      rows="1"</div> -->
+                      <div class="input-group" style="display: none;">
+                        <span class="input-group-text">Cập nhật mô tả điều trị</span>
+
+                        <!-- Dropdown for First Name -->
+                        <div class="input-group-prepend">
+                          <select class="form-select" id="inputGroupSelect01" name="inputGroupSelect01"
+                            aria-label="First name" style="width: 250px;">
+                            <option selected>Răng</option>
+                            <option value="Răng cửa">Răng cửa</option>
+                            <option value="Răng nanh">Răng nanh</option>
+                            <option value="Răng hàm nhỏ">Răng hàm nhỏ</option>
+                            <option value="Răng hàm lớn">Răng hàm lớn</option>
+                            <!-- Add more options as needed -->
+                          </select>
+                        </div>
+
+                        <!-- Dropdown for Last Name -->
+                        <div class="input-group-prepend">
+                          <select class="form-select" id="inputGroupSelect02" name="inputGroupSelect02"
+                            aria-label="Last name" style="width: 250px;">
+                            <option selected>Mặt răng</option>
+                            <option value="Mặt Trong">Mặt Trong</option>
+                            <option value="Mặt Ngoài">Mặt Ngoài </option>
+                            <option value="Mặt Xa">Mặt Xa</option>
+                            <option value="Mặt Gần">Mặt Gần </option>
+                            <option value="Mặt Đỉnh">Mặt Đỉnh</option>
+                            <option value="Mặt Chân">Mặt Chân</option>
+                            <!-- Add more options as needed -->
+                          </select>
+                        </div>
+                      </div>
+
+                      <% }) %>
+                        <div
+                          style="background-color: grey;height: 1px;width: 100%;margin-top: 50px;margin-bottom: 30px;">
+                        </div>
+                        <% if (prescriptionResult.length > 0 && prescriptionResult[0].PRESCRIPTION_ID) { %>
+                        <% prescriptionResult.forEach((pat3,index)=>{%>
+                          <div class="row gx-3 mb-3" style="display: none;">
+                            <div class="col-md-6">
+                              <label class="small mb-1" for="PRESCRIPTION_ID">Đơn</label>
+                              <input type="text" id="PRESCRIPTION_ID" name="PRESCRIPTION_ID"
+                                class="form-control form-control-lg" rows="1" value="<%= pat3.PRESCRIPTION_ID%>"
+                                required disabled>
+                            </div>
+
+                          </div>
+                          <div class="row gx-3 mb-3" style="display: none;">
+                            <div class="col-md-6">
+                              <label class="small mb-1" for="MEDICINE_ID<%=index%>">Thuốc ID</label>
+                              <input type="text" id="MEDICINE_ID<%=index%>" name="MEDICINE_ID<%=index%>"
+                                class="form-control form-control-lg" rows="1" value="<%= pat3.MEDICINE_ID%>"
+                                required disabled>
+                            </div>
+
+                          </div>
+                          <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                              <label class="small mb-1" for="MEDICINE_NAME">Tên thuốc</label>
+                              <select id="MEDICINE_NAME<%=index%>" name="MEDICINE_NAME<%=index%>"
+                                class="form-select form-select-lg" size="1" required disabled>
+                                <!-- Add your options here -->
+                                <option value="<%= pat3.MEDICINE_NAME%>">
+                                  <%= pat3.MEDICINE_NAME%>
+                                </option>
+                                <option value="MED001">Dentigel</option>
+                                <option value="MED002">Fluoride</option>
+                                <option value="MED003">PlaqueOff</option>
+                                <option value="MED004">GingiGard</option>
+                                <option value="MED005">CavityX</option>
+                                <option value="MED006">Xylitol</option>
+                                <!-- Add more options as needed -->
+                              </select>
+                            </div>
+
+                            <div class="col-md-6">
+                              <label class="small mb-1" for="QUANTITY">Số lượng</label>
+                              <input type="text" id="QUANTITY" name="QUANTITY<%=index%>"
+                                class="form-control form-control-lg" value="<%= pat3.QUANTITY%>" required disabled>
+                            </div>
+
+                          </div>
+                          <% }) %>
+                          <% } else { %>
+                            <div class="alert alert-warning" role="alert">
+                              This patient have no medicine yet !
+                            </div>
+                            <button type="button" class="btn btn-secondary mt-3 addtreatment" id="addRowBtn" style="margin-bottom: 20px;display: none;">+</button>
+                            <div id="dynamicFormContainer"></div>
+                          <% } %>
+                          <%if(role =="dentist" && username ==appointmentDetail1[0].DENTIST_ID){%>
+
+                            <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+                            <%}else{%>
+                              <button type="button" class="btn btn-secondary" disabled>You dont have permission</button>
+                              <%}%>
+
+
+                </form>
+                <br><br>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById("updateButton").addEventListener("click", function () {
+      var addtreatment = document.querySelector('.addtreatment');
+      var inputGroup = document.querySelector('.input-group');
+      var formElements = document.querySelectorAll("form input, form textarea,  form select");
+      var updateButton = document.getElementById("updateButton");
+if(addtreatment){
+      if (addtreatment.style.display === 'none') {
+        addtreatment.style.display = '';
+      } else {
+        addtreatment.style.display = 'none';
+      }
+
+      if (inputGroup.style.display === 'none') {
+        inputGroup.style.display = '';
+      } else {
+        inputGroup.style.display = 'none';
+      }}
+
+      if (updateButton.textContent === "Update") {
+        formElements.forEach(function (element) {
+          if (element.id !== "TREATMENT_ID" && element.id !== "APPOINTMENT_STATUS" && element.id !== "APPOINTMENT_ID" && element.id !== "patient_id" && element.id !== "full_name" && element.id !== "DOB" && element.id !== "allergies" && element.id !== "gender" && element.id !== "DESCRIPTION") {
+            element.removeAttribute("disabled");
+          }
+        });
+
+        updateButton.textContent = "Done";
+      } else if (updateButton.textContent === "Done") {
+        document.getElementById("myForm").submit();
+        formElements.forEach(function (element) {
+          element.setAttribute("disabled", true);
+        });
+
+        updateButton.textContent = "Update";
+      }
+    });
+
+  </script>
+  <script>
+    // Counter to keep track of the index for each new row
+    let rowIndex = -1;
+  
+    // Function to add a new row to the dynamic form
+    function addNewRow() {
+      // Increment the row index
+      rowIndex++;
+  
+      // Create the new row HTML
+      const newRowHtml = `
+      <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                              <label class="small mb-1" for="MEDICINE_NAME">Tên thuốc</label>
+                              <select id="MEDICINE_NAME${rowIndex}" name="MEDICINE_NAME${rowIndex}"
+                                class="form-select form-select-lg" size="1" required >
+                                <!-- Add your options here -->
+                            
+                                <option value="MED001">Dentigel</option>
+                                <option value="MED002">Fluoride</option>
+                                <option value="MED003">PlaqueOff</option>
+                                <option value="MED004">GingiGard</option>
+                                <option value="MED005">CavityX</option>
+                                <option value="MED006">Xylitol</option>
+                                <!-- Add more options as needed -->
+                              </select>
+                            </div>
+
+                            <div class="col-md-6">
+                              <label class="small mb-1" for="QUANTITY">Số lượng</label>
+                              <input type="text" id="QUANTITY" name="QUANTITY${rowIndex}"
+                                class="form-control form-control-lg" value="" required >
+                            </div>
+
+                          </div>
+      `;
+  
+      // Append the new row to the container
+      $('#dynamicFormContainer').append(newRowHtml);
+    }
+  
+    // Event listener for the plus button
+    $('#addRowBtn').on('click', addNewRow);
+  </script>
+</body>

@@ -1,0 +1,417 @@
+<%- include("partials/header"); %>
+
+<body>
+
+<br>
+<a href="/patientProfile/<%=prescriptionList[0].PATIENT_ID%>">
+    <button class="btn btn-secondary"style="position: absolute;left:20px">Back</button>
+</a> 
+  <div class="container border rounded p-3" style="margin-bottom: 50px;">
+    <!-- Tiêu đề -->
+    <h2><i class="fa-solid fa-users"></i> <strong> Danh sách đơn thuốc</strong></h2>
+    <div class="row">
+      <div class="col-md-4 mt-2  d-flex align-items-center ">
+        <div class="input-group " style="max-width: 266px;">
+          <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i
+              class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" class="form-control" style="background-color: #D9D9D9;" id="search-input"
+            placeholder="Tìm kiếm đơn thuốc">
+        </div>
+      </div>
+      <div class="col-md-2 mt-2  d-flex align-items-center">
+        <span class="me-3">
+          <!-- Thêm biểu tượng vào đây, ví dụ: Font Awesome icon -->
+          <i class="fa-solid fa-filter"></i>
+        </span>
+        <select id="filter-select" class="form-select" style="max-width: 127px;background-color: #D9D9D9;">
+          <option>Lần điều trị</option>
+          <option>Lần 01</option>
+          <option>Lần 02</option>
+          <option>Lần 03</option>
+          <option>Lần 04</option>
+          <option>Lần 05</option>
+        </select>
+        
+      </div>
+      
+      
+      <div class="col-md-3 mt-2 d-flex align-items-center">
+        <button id="button-ban-unban" class="btn btn-outline " style="background-color: #D9D9D9; margin-left: 30px;">Thêm điều trị</button>
+      </div>
+
+      <!-- Bảng -->
+
+      <div class="table-responsive mt-2">
+        <table id="myTable" class="table table-hover table-borderless ">
+          <thead>
+            <tr>
+              <th class="border-bottom">Điều trị <i class="fa-solid fa-sort"></i> </th>
+              <th class="border-bottom">Lần điều trị<i class="fa-solid fa-sort "></i></th>
+              <th class="border-bottom">Ngày viết hóa đơn<i class="fa-solid fa-sort"></i></th>
+              <th class="border-bottom"> Số loại thuốc <i class="fa-solid "></i></th>
+              <th class="border-bottom ">Nha sĩ<i class="fa-solid "></i></th>
+              <th class="border-bottom ">Chi tiết<i class="fa-solid "></i></th>
+              <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
+            </tr>
+          </thead>
+          <tbody id="bookTableBody">
+            <!-- Duplicate các dong ở đây -->
+            <% prescriptionList.forEach((pat)=>{%>
+              <tr>
+                <td><%=pat.TREATMENT_ID%></td>
+                <td>Lần <%=pat.APPOINTMENT_ID.slice(-2)%></td>
+
+                <td><%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })%></td> 
+                <td>
+                  <%=pat.Number_of_distinct_medicine%>
+                </td>
+
+                <td>
+     
+                    <%=pat.FULL_NAME%>
+          
+                </td>
+                
+              <!-- D-flex khi không có dị ứng -->
+              <td>
+                <div style="z-index: 31;">
+                  <a href="/prescription/<%= pat.PRESCRIPTION_ID%>" class="text-success">
+                    <i class="fa-solid fa-pencil" style="width:20;height:20;"></i>
+                  </a>
+                </div>
+              </td>
+             
+              <td><div style="z-index: 31;">                                          
+                <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)"
+                    class="" alt="Small Image " width="20" height="20">
+              </div></td>
+              <!-- Thêm dòng để xóa -->
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+
+</body>
+
+<style>
+  .btn-text {
+    cursor: default;
+    /* Không thay đổi con trỏ chuột khi di chuột vào */
+    pointer-events: none;
+    /* Vô hiệu hóa sự kiện chuột cho thẻ */
+    color: #6c757d;
+    /* Màu chữ khi vô hiệu hóa */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+  }
+
+  .chong-chi-dinh-cell {
+    max-width: 200px;
+    /* Adjust the maximum width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .di-ung-cell{
+    max-width: 100px;
+    /* Adjust the maximum width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
+<style>
+  .p-1 {
+    width: 90px;
+    /* Đặt chiều rộng cố định cho các khung */
+    text-align: center;
+    /* Căn giữa nội dung trong khung */
+  }
+</style>
+<script>
+  function deleteRowAndImage(element) {
+    var row = element.closest('tr'); // Find the closest <tr> element to the clicked image
+    row.remove(); // Remove the row from the table
+  }
+
+  // Attach the click event to all the images in the table
+  var images = document.querySelectorAll("#myTable img");
+  images.forEach(function (image) {
+    image.addEventListener("click", function () {
+      deleteRowAndImage(image);
+    });
+  });
+</script>
+<script>
+  // Function to redirect based on the STT value
+//   function redirectToURL(row) {
+//     var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
+//     var url = "/prescription/" + stt; // Construct the URL based on STT
+
+//     // Redirect to the constructed URL
+//     window.location.href = url;
+//   }
+
+//   // Attach a click event to all the rows in the table
+//   var rows = document.querySelectorAll("#myTable tbody tr");
+
+// rows.forEach(function (row) {
+//   row.addEventListener("click", function (event) {
+//     // Check if the click occurred on the image inside the row
+//     if (event.target.tagName.toLowerCase() !== 'img') {
+//       // Redirect to the URL based on row content
+//       redirectToURL(row);
+//     }
+//   });
+// });
+
+
+  // Search===================================================================
+</script>
+<script>
+  // Function to handle search filtering
+  function handleSearch() {
+    var searchInput = document.getElementById("search-input");
+    var filter = searchInput.value.toLowerCase();
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Loop through all table rows and hide those that don't match the search query
+    for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+      var nameCell = rows[i].getElementsByTagName("td")[4]; // 2nd column (Họ tên)
+
+      if (nameCell) {
+        var name = nameCell.innerText.toLowerCase();
+
+        if (name.indexOf(filter) > -1) {
+          rows[i].style.display = ""; // Show the row if it matches the search query
+        } else {
+          rows[i].style.display = "none"; // Hide the row if it doesn't match
+        }
+      }
+    }
+  }
+
+  // Attach the search event listener to the search input
+  var searchInput = document.getElementById("search-input");
+  searchInput.addEventListener("input", handleSearch);
+</script>
+
+<!-- Filter giới tính============================================================================= -->
+<script>
+  // Function to handle gender filtering
+  function handleGenderFilter() {
+    var filterSelect = document.getElementById("filter-select");
+    var selectedGender = filterSelect.value;
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Reset the visibility of all rows
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].style.display = "";
+    }
+
+    // If the selected gender is not "Giới tính," apply the filter
+    if (selectedGender !== "Lần điều trị") {
+      // Loop through all table rows and hide those that don't match the selected gender
+      for (var i = 1; i < rows.length; i++) {
+        var genderCell = rows[i].getElementsByTagName("td")[1]; // 4th column (Giới tính)
+
+        if (genderCell) {
+          var gender = genderCell.innerText;
+
+          if (gender !== selectedGender) {
+            rows[i].style.display = "none"; // Hide the row if it doesn't match
+          }
+        }
+      }
+    }
+  }
+
+  // Attach the gender filter event listener to the filter select element
+  var filterSelect = document.getElementById("filter-select");
+  filterSelect.addEventListener("change", handleGenderFilter);
+</script>
+
+<!-- Filter dị ứng===================================================================================== -->
+
+<script>
+  // Function to handle allergies filter based on "Tình trạng dị ứng" column
+  function handleAllergiesFilter() {
+    var filterSelect = document.getElementById("allergies-filter-select");
+    var selectedAllergy = filterSelect.value;
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Reset the visibility of all rows
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].style.display = "";
+    }
+
+    // If the selected allergy is not "Dị ứng," apply the filter
+    if (selectedAllergy !== "Dị ứng") {
+      // Loop through all table rows and hide those that don't match the selected allergy
+      for (var i = 1; i < rows.length; i++) {
+        var allergyStatusCell = rows[i].getElementsByTagName("td")[4]; // 5th column (Tình trạng dị ứng)
+
+        if (allergyStatusCell) {
+          var allergyStatus = allergyStatusCell.innerText;
+
+          if (
+            (selectedAllergy === "Không" && allergyStatus !== "Không") ||
+            (selectedAllergy === "Có" && allergyStatus === "Không")
+          ) {
+            rows[i].style.display = "none"; // Hide the row if it doesn't match the selected allergy
+          }
+        }
+      }
+    }
+  }
+
+  // Attach the allergies filter event listener to the allergies filter select element
+  var allergiesFilterSelect = document.getElementById("allergies-filter-select");
+  allergiesFilterSelect.addEventListener("change", handleAllergiesFilter);
+</script>
+
+<!-- Sort DOB================================================================================================= -->
+
+<script>
+  // Function to parse date strings and return a date object
+  function parseDate(dateString) {
+    const dateParts = dateString.split("/");
+    return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+  }
+
+  // Function to handle sorting for Ngày Sinh column
+  function handleSortNgaySinh(order) {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[2]; // 3rd column (Ngày Sinh)
+      var date = parseDate(cell.innerText);
+      data.push({ date, row: rows[i] });
+    }
+
+    data.sort(function (a, b) {
+      if (order === "asc") {
+        return a.date - b.date;
+      } else {
+        return b.date - a.date;
+      }
+    });
+
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+
+  // Attach the sorting event listeners to the column header
+  var ngaySinhHeader = document.querySelector("#myTable thead th:nth-child(3)");
+  ngaySinhHeader.addEventListener("click", function () {
+    if (this.classList.contains("sorted-asc")) {
+      handleSortNgaySinh("desc");
+      this.classList.remove("sorted-asc");
+      this.classList.add("sorted-desc");
+    } else {
+      handleSortNgaySinh("asc");
+      this.classList.remove("sorted-desc");
+      this.classList.add("sorted-asc");
+    }
+  });
+</script>
+
+<script>
+  function handleSortHoTen(order) {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[1]; // 2nd column (Họ tên)
+      var name = cell.innerText;
+      data.push({ name, row: rows[i] });
+    }
+
+    data.sort(function (a, b) {
+      if (order === "asc") {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+</script>
+<script>
+  // Attach the sorting event listeners to the column header
+  var hoTenHeader = document.querySelector("#myTable thead th:nth-child(2)"); // 2nd column (Họ tên)
+  hoTenHeader.addEventListener("click", function () {
+    if (this.classList.contains("sorted-asc")) {
+      handleSortHoTen("desc");
+      this.classList.remove("sorted-asc");
+      this.classList.add("sorted-desc");
+    } else {
+      handleSortHoTen("asc");
+      this.classList.remove("sorted-desc");
+      this.classList.add("sorted-asc");
+    }
+  });
+</script>
+<script>// Function to handle sorting for STT column
+  function handleSortSTT() {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+  
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[0]; // 1st column (STT)
+      var stt = parseInt(cell.innerText);
+      data.push({ stt, row: rows[i] });
+    }
+  
+    // Check the current sorting order based on the icon's class
+    var sttHeader = document.querySelector("#myTable thead th:nth-child(1)");
+    var isAscending = sttHeader.classList.contains("sorted-asc");
+  
+    if (isAscending) {
+      data.sort(function (a, b) {
+        return b.stt - a.stt; // Sort in descending order
+      });
+      sttHeader.classList.remove("sorted-asc");
+      sttHeader.classList.add("sorted-desc");
+    } else {
+      data.sort(function (a, b) {
+        return a.stt - b.stt; // Sort in ascending order
+      });
+      sttHeader.classList.remove("sorted-desc");
+      sttHeader.classList.add("sorted-asc");
+    }
+  
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+  
+  // Attach the sorting event listener to the STT column header
+  var sttHeader = document.querySelector("#myTable thead th:nth-child(1)");
+  sttHeader.addEventListener("click", handleSortSTT);
+  </script>
+
+
+
+</body>
+
+</html>

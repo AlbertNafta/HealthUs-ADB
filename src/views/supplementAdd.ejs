@@ -1,0 +1,85 @@
+<%- include("partials/header"); %>
+
+<body>
+
+  <div class="row">
+    <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2" style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+      <!-- Sidebar -->
+      <h3>Xem thêm:</h3>
+    </div>
+
+    <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+      <div class="container-xl px-4 mt-4">
+        <div class="row">
+
+          <div class="col-xl-8" style="right:100px;position: absolute;">
+            <!-- Account details card-->
+            <div class="card mb-4 w-100">
+              <div class="card-header">Chi tiết bệnh nhân</div>
+              <div class="card-body">
+                <form action="/patientAdd" method="POST" id="myForm">
+                  <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+
+                      <label class="small mb-1" for="patient_id">Số điện thoại</label>
+
+                      <input type="text" id="patient_id" name="patient_id" class="form-control form-control-lg" required>
+                      <% if (locals.message) { %>
+                      <div class="small text-danger"><%= message%></div>
+                    <% } %>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="full_name">Họ và tên</label>
+                      <input type="text" id="full_name" name="full_name" class="form-control form-control-lg" required>
+                    </div>
+                  </div>
+                  <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="dob">Ngày Sinh</label>
+                      <input type="date" id="dob" name="dob" class="form-control form-control-lg" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="gender">Giới tính</label>
+                      <input type="text" id="gender" name="gender" class="form-control form-control-lg" required>
+                    </div>
+
+                  </div>
+                  <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="small mb-1" for="allergies">Tình trạng dị ứng</label>
+                      <input type="text" id="allergies" name="allergies" class="form-control form-control-lg" rows="1"required >
+                    </div>
+                  </div>
+                  <button id="updateButton" class="btn btn-primary" type="submit">Thêm</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    document.getElementById("updateButton").addEventListener("click", function() {
+      var formElements = document.querySelectorAll("form input, form textarea");
+      var updateButton = document.getElementById("updateButton");
+
+      if (updateButton.textContent === "Update") {
+        formElements.forEach(function(element) {
+          if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "Treatmentpaid" && element.id !== "contraindication" && element.id !== "" && element.id !== "description") {
+            element.removeAttribute("disabled");
+          }
+        });
+
+        updateButton.textContent = "Done";
+      } else if (updateButton.textContent === "Done") {
+        document.getElementById("myForm").submit();
+        formElements.forEach(function(element) {
+          element.setAttribute("disabled", true);
+        });
+
+        updateButton.textContent = "Update";
+      }
+    });
+  </script> -->
+</body>

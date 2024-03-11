@@ -1,0 +1,26 @@
+<%- include("partials/header"); %>
+<div style="position: absolute;left:34px;top:57px">
+    <img src="../public/image/Frame79.png" width="600px">
+</div>
+<div class="container-making-form align-items-center min-vh-100">
+    <div class="row g-0 justify-content-center">
+        <div class="col-lg-4 offset-lg-1 mx-0 px-0"style="position: absolute;right: 160px;">
+            <div id="title-container">
+                <img class="logo-image" src="">
+                <h2 style="text-align:  center;">ĐẶT LỊCH HẸN</h2>
+                <h2 style="text-align:  center;">MÃ BỆNH NHÂN: <%= username %></h2>
+                <form action="/bookingAppointment/bookOK" method="POST">
+                    <div class="card" style="padding: 10px;">
+                        <label for="Dentist"><h4>Dentist:</h4></label>
+                        <% dentists.forEach((dentist) => { %>
+                            <input type="radio" name="dentist" id="dentist" value="<%= dentist.DENTIST_ID %>" style="">
+                            <label for="dentist"><%= dentist.FULL_NAME %></label>
+                        <% }) %>
+                    </div><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+   

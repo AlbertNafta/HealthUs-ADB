@@ -1,0 +1,191 @@
+<%- include("partials/header"); %>
+
+  <body>
+
+    <div class="row">
+      <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2"
+        style="padding-left:30px;padding-top: 20px;background-color: rgba(146, 255, 255, 0.199);border-radius: 10px;height:600px;width:250px; z-index: 10;position: absolute;left:40px;top:80px;">
+        <!-- Sidebar -->
+        <h3>Xem thêm:</h3>
+        <% treatmentDetail.forEach((pat)=>{%>
+
+          <a href="/treatListperPatient/<%= pat.PATIENT_ID %>">
+            <button class="btn btn-secondary">Back</button>
+          </a>
+
+          <h5>ㅤ</h5><a href="/precriptionList/<%= pat.TREATMENT_ID %>">
+            <button class="btn btn-secondary">Danh sách đơn thuốc</button></a>
+          <h5>ㅤ</h5><a href="/appointmentList/<%= pat.TREATMENT_ID %>">
+            <button class="btn btn-secondary">Danh sách cuộc hẹn</button></a>
+      </div>
+
+
+
+      <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10">
+        <div class="container-xl px-4 mt-4">
+          <div class="row">
+
+            <div class="col-xl-8" style="right:100px;position: absolute;">
+              <!-- Account details card-->
+              <div class="card mb-4 w-100">
+                <div class="card-header">Chi tiết điều trị</div>
+                <div class="card-body">
+                  <form action="/treatment/<%= pat.TREATMENT_ID%>" method="POST" id="myForm">
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+
+                        <label class="small mb-1" for="patientID">ID</label>
+
+
+                        <input type="text" id="patientID" class="form-control form-control-lg"
+                          value="<%= pat.TREATMENT_ID %>" disabled>
+                        <!-- <% if (locals.errorMessage1) { %>
+                      <div class="small text-danger"><%= errorMessage1%></div>
+                    <% } %> -->
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1" for="DentistName"><a href="/dentistDetail/<%= pat.DENTIST_ID %>"
+                            style="text-decoration: none;color: black;">Nha sĩ chính</a></label>
+                        <input type="text" id="DentistName" name="DentistName" class="form-control form-control-lg"
+                          value="<%= pat.DentistName %>" disabled>
+                        <!-- <% if (locals.errorMessage2) { %>
+                      <div class="small text-danger"><%= errorMessage2 %></div>
+                    <% } %> -->
+                      </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                        <label class="small mb-1" for="AssistantName"><a href="/dentistDetail/<%= pat.ASSISTANT_ID %>"
+                            style="text-decoration: none;color: black;">Nha sĩ phụ</a></label>
+                        <input type="text" id="AssistantName" name="AssistantName" class="form-control form-control-lg"
+                          value="<%= pat.AssistantName %>" disabled>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1" for="Gender"><a href="/patientProfile/<%= pat.PATIENT_ID %>"
+                            style="text-decoration: none;color: black;">Bệnh nhân được điều trị</a></label>
+                        <input type="text" id="Gender" class="form-control form-control-lg"
+                          value="<%= pat.PatientName %>" disabled>
+                      </div>
+
+                    </div>
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                        <label class="small mb-1" for="treatmentStatus">Tình trạng điều trị</label>
+                        <select id="treatmentStatus" name="treatmentStatus" class="form-control form-control-lg"
+                          disabled>
+                          <option value="GG" selected>
+                            <%=pat.TREATMENT_STATUS%>
+                          </option>
+                          <option value="Completed">Completed</option>
+                          <option value="In progress">In progress</option>
+                          <option value="Canceled">Canceled</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1" for="Gender"><a
+                            href="/appointmentDetail/<%= pat.TREATMENT_ID %>/APP01"
+                            style="text-decoration: none;color: black;">Ngày điều trị đầu tiên</a> </label>
+                        <input type="text" id="Gender" class="form-control form-control-lg"
+                          value="<%= pat.APPOINTMENT_DATE.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) %>"
+                          disabled>
+                      </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="mb-3">
+                  <label class="small mb-1" for="description">Mô tả điều trị</label>
+                  <textarea disabled id="description" name="description" class="form-control form-control-lg"
+                    rows="2"><%= pat.DESCRIPTION %></textarea>
+                </div>
+
+                <div class="input-group" style="display: none;">
+                  <span class="input-group-text">Cập nhật mô tả điều trị</span>
+
+                  <!-- Dropdown for First Name -->
+                  <div class="input-group-prepend">
+                    <select class="form-select" id="inputGroupSelect01" name="inputGroupSelect01"
+                      aria-label="First name" style="width: 300px;">
+                      <option selected>Răng</option>
+                      <option value="Răng cửa">Răng cửa</option>
+                      <option value="Răng nanh">Răng nanh</option>
+                      <option value="Răng hàm nhỏ">Răng hàm nhỏ</option>
+                      <option value="Răng hàm lớn">Răng hàm lớn</option>
+                      <!-- Add more options as needed -->
+                    </select>
+                  </div>
+
+                  <!-- Dropdown for Last Name -->
+                  <div class="input-group-prepend">
+                    <select class="form-select" id="inputGroupSelect02" name="inputGroupSelect02" aria-label="Last name"
+                      style="width: 300px;">
+                      <option selected>Mặt răng</option>
+                      <option value="Mặt Trong">Mặt Trong</option>
+                      <option value="Mặt Ngoài">Mặt Ngoài </option>
+                      <option value="Mặt Xa">Mặt Xa</option>
+                      <option value="Mặt Gần">Mặt Gần </option>
+                      <option value="Mặt Đỉnh">Mặt Đỉnh</option>
+                      <option value="Mặt Chân">Mặt Chân</option>
+                      <!-- Add more options as needed -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="small mb-1" for="description">Nơi khám</label>
+                  <textarea disabled id="Gender" name="description" class="form-control form-control-lg"
+                    rows="2"><%= pat.ClinicAddress %></textarea>
+                </div>
+                <% }) %>
+                  <button id="updateButton" class="btn btn-primary" type="button">Update</button>
+
+
+                  </form>
+                  <br><br>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <script>
+      document.getElementById("updateButton").addEventListener("click", function () {
+        var inputGroup = document.querySelector('.input-group');
+
+        var formElements = document.querySelectorAll("form input, form textarea, form select");
+        var updateButton = document.getElementById("updateButton");
+        if (inputGroup.style.display === 'none') {
+          inputGroup.style.display = '';
+        } else {
+          inputGroup.style.display = 'none';
+        }
+        if (updateButton.textContent === "Update") {
+          formElements.forEach(function (element) {
+            if (element.id !== "patientID" && element.id !== "TreatmentFee" && element.id !== "description" && element.id !== "" && element.id !== "patientName" && element.id !== "Gender") {
+              element.removeAttribute("disabled");
+            }
+          });
+
+
+          updateButton.textContent = "Done";
+        } else if (updateButton.textContent === "Done") {
+          document.getElementById("myForm").submit();
+          formElements.forEach(function (element) {
+            element.setAttribute("disabled", true);
+          });
+
+          // Disable the description textarea
+          descriptionTextarea.setAttribute("disabled", true);
+
+          updateButton.textContent = "Update";
+        }
+      });
+    </script>
+
+  </body>

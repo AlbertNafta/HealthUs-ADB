@@ -1,0 +1,662 @@
+<!-- <%- include("partials/header"); %> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Open Sans Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- FontAweSome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <!-- Styles.css -->
+  <!-- <link rel="stylesheet" href="/css/stylesHome.css" type="text/css"/> -->
+  <!-- <link rel="stylesheet" href="/css/styleManage.css" type="text/css"/> -->
+  <link rel="stylesheet" href="../public/css/stylesUpload.css" type="text/css" />
+  <link rel="stylesheet" href="../public/css/avtDropDown.css" type="text/css"/>
+  <!-- Tiny ediotr -->
+  <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  <title>Health Us</title>
+  <nav class="navbar navbar-expand-lg bg-transparent">
+    <div class="container-fluid" style="background-color: #dcfffd;">
+      <a class="navbar-brand" href="">
+        <img class="rounded-2" src="../public/image/logo.png" alt="Bootstrap" width="60" height="40">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+        <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+          <li class="nav-item rounded-3">
+            <b><a class="nav-link" href="/patientList">Quản lý bệnh nhân</a></b>
+          </li>
+          <li class="nav-item rounded-3">
+            <b><a class="nav-link" href="">Quản lý cuộc hẹn</a></b>
+          </li>
+          <li class="nav-item rounded-3">
+            <b><a class="nav-link" href="">Quản lý nhân viên</a></b>
+          </li>
+
+          <li class="nav-item rounded-3">
+            <b><a class="nav-link" href="">Quản lý thuốc</a></b>
+          </li>
+          <div style="width: 354px;"></div>
+          <!-- ======================================================================================================== -->
+          <li class="nav-item ml-auto rounded-3">
+            <div class="profile float-end" onmouseover="hoverOn(this)" onmouseout="hoverOff(this)">
+              <div class="user-profile">
+                <p>Le Nhan</p>
+              </div>
+              <div class="img-box">
+                <img src="../public/image/admin_ava.jpeg" alt="some user image" />
+              </div>
+            </div>
+            <div class="menu">
+              <ul>
+                <li>
+                  <a href="#"><i class="fa-regular fa-user"></i>Tài khoản</a>
+                </li>
+                <li>
+                  <a href=""><i class="far fa-bell"></i>Thông báo</a>
+                </li>
+                <li>
+                  <a href=""><i class="fas fa-history"></i>Xét yêu cầu hẹn</a>
+                </li>
+                <!-- <li>
+                        <a href=""><i class="far fa-bookmark"></i>Sách yêu thích</a>
+                      </li> -->
+
+                <li>
+                  <a href=""><i class="fa-solid fa-gear"></i>Quản lý d/s</a>
+                </li>
+
+                <li>
+                  <a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>Thoát</a>
+                </li>
+              </ul>
+            </div>
+
+            <script>
+              let profile = document.querySelector(".profile");
+              let menu = document.querySelector(".menu");
+              let userProfile = document.querySelector(".user-profile");
+
+              document.onclick = function(e) {
+                if (!profile.contains(e.target) && !menu.contains(e.target)) {
+                  menu.classList.remove("active");
+                }
+              };
+
+              profile.onclick = function(e) {
+                menu.classList.toggle("active");
+              };
+
+              function hoverOn(e) {
+                e.style.color = "#36a189";
+              }
+
+              function hoverOff(e) {
+                e.style.color = "rgb(72, 72, 72)";
+              }
+            </script>
+          </li>
+
+        </ul>
+
+
+      </div>
+    </div>
+
+  </nav>
+</head>
+
+
+<body>
+  <br>
+
+  <div class="container border rounded p-3" style="margin-bottom: 50px;">
+    <!-- Tiêu đề -->
+    <h2><i class="fa-solid fa-users"></i> <strong> Quản lý yêu cầu</strong></h2>
+    <div class="row">
+      <div class="col-md-5 mt-2  d-flex align-items-center ">
+        <div class="input-group align-items-center" style="max-width: 466px;">
+          <form action="/tableRequestSearch" method="GET" style="width: 266px;"class = "align-items-center">
+            <!-- <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i class="fa-solid fa-magnifying-glass"></i></span> -->
+            <input type="search" name="full_name" class="form-control" style="background-color: #D9D9D9;" id="search-input" placeholder="Tìm kiếm theo tên bệnh nhân">
+           
+          </form>
+          <input type="submit" value="Search" class="btn btn-info">
+        </div>
+      </div>
+      <div class="col-md-2 mt-2  d-flex align-items-center">
+        <span class="me-3">
+          <!-- Thêm biểu tượng vào đây, ví dụ: Font Awesome icon -->
+        </span>
+        <!-- <select id="filter-select" class="form-select" style="max-width: 113px;background-color: #D9D9D9;">
+          <option>Lọc địa chỉ</option>
+          <option>District 1</option>
+          <option>District 3</option>
+          <option>District 5</option>
+          <option>District 7</option>
+          <option>District 10</option>
+          
+        </select> -->
+
+      </div>
+
+      <div class="col-md-2 mt-2  d-flex align-items-center">
+        <!-- <select id="allergies-filter-select" class="form-select" style="max-width: 110px;background-color: #D9D9D9;">
+          <option>Lọc theo hẹn </option>
+          <option>Riêng</option>
+          <option>chung</option>
+        </select> -->
+
+      </div>
+      <div class="col-md-3 mt-2 d-flex align-items-center">
+        <a href="/patientAdd">
+          <button id="button-ban-unban" class="btn btn-outline " style="background-color: #D9D9D9; margin-left: 30px;">Thêm cuộc hẹn</button>
+        </a>
+      </div>
+
+      <!-- Bảng -->
+
+      <div class="table-responsive mt-2">
+        <table id="myTable" class="table table-hover table-borderless ">
+          <thead>
+            <tr>
+              <th class="border-bottom">Yêu cầu số <i class="fa-solid fa-sort"></i> </th>
+              <th class="border-bottom">Tên bệnh nhân <i class="fa-solid fa-sort "></i></th>
+              <th class="border-bottom">Ngày hẹn mong muốn <i class="fa-solid fa-sort"></i></th>
+              <th class="border-bottom"> Ngày gửi <i class="fa-solid "></i></th>
+              <th class="border-bottom ">Ghi chú<i class="fa-solid "></i></th>
+              <th class="border-bottom ">Xóa<i class="fa-solid "></i></th>
+            </tr>
+          </thead>
+          <tbody id="bookTableBody">
+            <!-- Duplicate các dong ở đây -->
+            <!-- <% patientData.forEach((pat)=>{%> -->
+            <tr>
+              <td>000001</td>
+              <td>Mãng Cầu</td>
+             
+              <td>12/12/2003</td>
+              <td>
+                13/12/2004
+              </td>
+
+              <td class="d-flex  ">
+                Blg blah blah Nhân
+              </td>
+             
+              <td>
+                <div style="z-index: 31;">
+                  <form action="/patientProfile/<%= pat.PATIENT_ID%>" method="post">
+                    <button type="submit" class="btn">
+                      <img src="../public/image/rubbish-bins-waste-paper-baskets-emoji-sticker-emoji-3e1c0b2407f930ddd703dd00e8712468.png" onclick="deleteRowAndImage(this)" class="" alt="Small Image " width="20" height="20">
+                    </button>
+                  </form>
+                </div>
+              </td>
+              <!-- Thêm dòng để xóa -->
+            </tr>
+          </tbody>
+        </table>
+        <!-- Add this section at the bottom of your HTML file, below the table -->
+        <div class="pagination">
+          <button id="firstPage">First</button>
+          <button id="prevPage">Previous</button>
+          <span id="currentPage">Page 1</span>
+          <button id="nextPage">Next</button>
+          <button id="lastPage">Last</button>
+        </div>
+      </div>
+
+    </div>
+
+
+
+</body>
+
+<style>
+  .btn-text {
+    cursor: default;
+    /* Không thay đổi con trỏ chuột khi di chuột vào */
+    pointer-events: none;
+    /* Vô hiệu hóa sự kiện chuột cho thẻ */
+    color: #6c757d;
+    /* Màu chữ khi vô hiệu hóa */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+  }
+
+  .chong-chi-dinh-cell {
+    max-width: 200px;
+    /* Adjust the maximum width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .di-ung-cell {
+    max-width: 100px;
+    /* Adjust the maximum width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
+<style>
+  .p-1 {
+    width: 90px;
+    /* Đặt chiều rộng cố định cho các khung */
+    text-align: center;
+    /* Căn giữa nội dung trong khung */
+  }
+</style>
+<style>
+  /* Add this CSS for pagination styling */
+  .pagination {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  function deleteRowAndImage(element) {
+    var row = element.closest('tr'); // Find the closest <tr> element to the clicked image
+    row.remove(); // Remove the row from the table
+  }
+
+  // Attach the click event to all the images in the table
+  var images = document.querySelectorAll("#myTable img");
+  images.forEach(function(image) {
+    image.addEventListener("click", function() {
+      deleteRowAndImage(image);
+    });
+  });
+</script>
+<script>
+  //   function redirectToURL(row) {
+  //     var stt = row.querySelector('td:first-child').innerHTML.trim(); // Get the STT value
+  //     var url = "/patientProfile/" + stt; // Construct the URL based on STT
+
+  //     window.location.href = url;
+  //  }
+
+  // Attach a click event to all the rows in the table
+  var rows = document.querySelectorAll("#myTable tbody tr");
+
+  rows.forEach(function(row) {
+    row.addEventListener("click", function(event) {
+      // Check if the click occurred on the image inside the row
+      if (event.target.tagName.toLowerCase() !== 'img') {
+        // Redirect to the URL based on row content
+        redirectToURL(row);
+      }
+    });
+  });
+
+
+  // Search===================================================================
+</script>
+<!-- <script>
+  function handleSearch(event) {
+    // Check if the Enter key was pressed (key code 13)
+    if (event.keyCode === 13) {
+      var searchInput = document.getElementById("search-input");
+      var filter = searchInput.value.toLowerCase();
+      var table = document.getElementById("myTable");
+      var rows = table.getElementsByTagName("tr");
+
+      // Loop through all table rows and hide those that don't match the search query
+      for (var i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+        var nameCell = rows[i].getElementsByTagName("td")[1]; // 2nd column (Họ tên)
+        var idCell = rows[i].getElementsByTagName("td")[0]; // 1st column (ID)
+
+        if (nameCell && idCell) {
+          var name = nameCell.innerText.toLowerCase();
+          var id = idCell.innerText.toLowerCase();
+
+          // Check if the filter matches either name or id
+          if (name.indexOf(filter) > -1 || id.indexOf(filter) > -1) {
+            rows[i].style.display = ""; // Show the row if it matches the search query
+          } else {
+            rows[i].style.display = "none"; // Hide the row if it doesn't match
+          }
+        }
+      }
+    }
+  }
+
+  // Attach the search event listener to the search input for the "input" event
+  var searchInput = document.getElementById("search-input");
+  searchInput.addEventListener("input", handleSearch);
+
+  // Attach a keydown event listener to the search input for the "keydown" event
+  searchInput.addEventListener("keydown", handleSearch);
+</script> -->
+
+<!-- Filter giới tính============================================================================= -->
+<script>
+  // Function to handle gender filtering
+  function handleGenderFilter() {
+    var filterSelect = document.getElementById("filter-select");
+    var selectedGender = filterSelect.value;
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Reset the visibility of all rows
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].style.display = "";
+    }
+
+    // If the selected gender is not "Giới tính," apply the filter
+    if (selectedGender !== "Lọc địa chỉ") {
+  // Loop through all table rows and hide those that don't match the selected gender
+  for (var i = 1; i < rows.length; i++) {
+    var genderCell = rows[i].getElementsByTagName("td")[4]; // 4th column (Giới tính)
+
+    if (genderCell) {
+      var gender = genderCell.innerText;
+
+      // Assuming selectedGender is a string of length 11
+      if (gender.slice(-10) !== selectedGender) {
+        console.log(gender.slice(-11));
+        console.log(selectedGender);
+
+        rows[i].style.display = "none"; // Hide the row if it doesn't match
+      }
+    }
+  }
+}
+
+  }
+
+  // Attach the gender filter event listener to the filter select element
+  var filterSelect = document.getElementById("filter-select");
+  filterSelect.addEventListener("change", handleGenderFilter);
+</script>
+
+<!-- Filter dị ứng===================================================================================== -->
+
+<script>
+  // Function to handle allergies filter based on "Tình trạng dị ứng" column
+  function handleAllergiesFilter() {
+    var filterSelect = document.getElementById("allergies-filter-select");
+    var selectedAllergy = filterSelect.value;
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    // Reset the visibility of all rows
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].style.display = "";
+    }
+
+    // If the selected allergy is not "Dị ứng," apply the filter
+    if (selectedAllergy !== "Dị ứng") {
+      // Loop through all table rows and hide those that don't match the selected allergy
+      for (var i = 1; i < rows.length; i++) {
+        var allergyStatusCell = rows[i].getElementsByTagName("td")[4]; // 5th column (Tình trạng dị ứng)
+
+        if (allergyStatusCell) {
+          var allergyStatus = allergyStatusCell.innerText;
+
+          if (
+            (selectedAllergy === "Không" && allergyStatus !== "Không") ||
+            (selectedAllergy === "Có" && allergyStatus === "Không")
+          ) {
+            rows[i].style.display = "none"; // Hide the row if it doesn't match the selected allergy
+          }
+        }
+      }
+    }
+  }
+
+  // Attach the allergies filter event listener to the allergies filter select element
+  var allergiesFilterSelect = document.getElementById("allergies-filter-select");
+  allergiesFilterSelect.addEventListener("change", handleAllergiesFilter);
+</script>
+
+<!-- Sort DOB================================================================================================= -->
+
+<script>
+  // Function to parse date strings and return a date object
+  function parseDate(dateString) {
+    const dateParts = dateString.split("/");
+    return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+  }
+
+  // Function to handle sorting for Ngày Sinh column
+  function handleSortNgaySinh(order) {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[2]; // 3rd column (Ngày Sinh)
+      var date = parseDate(cell.innerText);
+      data.push({
+        date,
+        row: rows[i]
+      });
+    }
+
+    data.sort(function(a, b) {
+      if (order === "asc") {
+        return a.date - b.date;
+      } else {
+        return b.date - a.date;
+      }
+    });
+
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+
+  // Attach the sorting event listeners to the column header
+  var ngaySinhHeader = document.querySelector("#myTable thead th:nth-child(3)");
+  ngaySinhHeader.addEventListener("click", function() {
+    if (this.classList.contains("sorted-asc")) {
+      handleSortNgaySinh("desc");
+      this.classList.remove("sorted-asc");
+      this.classList.add("sorted-desc");
+    } else {
+      handleSortNgaySinh("asc");
+      this.classList.remove("sorted-desc");
+      this.classList.add("sorted-asc");
+    }
+  });
+</script>
+
+<script>
+  function handleSortHoTen(order) {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[1]; // 2nd column (Họ tên)
+      var name = cell.innerText;
+      data.push({
+        name,
+        row: rows[i]
+      });
+    }
+
+    data.sort(function(a, b) {
+      if (order === "asc") {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+</script>
+<script>
+  // Attach the sorting event listeners to the column header
+  var hoTenHeader = document.querySelector("#myTable thead th:nth-child(2)"); // 2nd column (Họ tên)
+  hoTenHeader.addEventListener("click", function() {
+    if (this.classList.contains("sorted-asc")) {
+      handleSortHoTen("desc");
+      this.classList.remove("sorted-asc");
+      this.classList.add("sorted-desc");
+    } else {
+      handleSortHoTen("asc");
+      this.classList.remove("sorted-desc");
+      this.classList.add("sorted-asc");
+    }
+  });
+</script>
+<script>
+  // Function to handle sorting for STT column
+  function handleSortSTT() {
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var data = [];
+
+    for (var i = 1; i < rows.length; i++) {
+      var cell = rows[i].cells[0]; // 1st column (STT)
+      var stt = parseInt(cell.innerText);
+      data.push({
+        stt,
+        row: rows[i]
+      });
+    }
+
+    // Check the current sorting order based on the icon's class
+    var sttHeader = document.querySelector("#myTable thead th:nth-child(1)");
+    var isAscending = sttHeader.classList.contains("sorted-asc");
+
+    if (isAscending) {
+      data.sort(function(a, b) {
+        return b.stt - a.stt; // Sort in descending order
+      });
+      sttHeader.classList.remove("sorted-asc");
+      sttHeader.classList.add("sorted-desc");
+    } else {
+      data.sort(function(a, b) {
+        return a.stt - b.stt; // Sort in ascending order
+      });
+      sttHeader.classList.remove("sorted-desc");
+      sttHeader.classList.add("sorted-asc");
+    }
+
+    // Reorder the table rows
+    for (var i = 0; i < data.length; i++) {
+      table.appendChild(data[i].row);
+    }
+  }
+
+  // Attach the sorting event listener to the STT column header
+  var sttHeader = document.querySelector("#myTable thead th:nth-child(1)");
+  sttHeader.addEventListener("click", handleSortSTT);
+</script>
+<script>
+  // ... (existing code)
+
+  // Add this code to handle pagination
+  var totalRows = document.getElementById("bookTableBody").getElementsByTagName("tr").length - 1;
+  var currentPage = 1;
+  var rowsPerPage = 20;
+
+  function updateTable() {
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tr");
+
+    var startIndex = (currentPage - 1) * rowsPerPage + 1;
+    var endIndex = currentPage * rowsPerPage + 1;
+
+    for (var i = 1; i < rows.length; i++) {
+      if (i >= startIndex && i < endIndex) {
+        rows[i].style.display = ""; // Show the rows for the current page
+      } else {
+        rows[i].style.display = "none"; // Hide rows not on the current page
+      }
+    }
+
+    // Update the current page display
+    document.getElementById("currentPage").innerText = "Page " + currentPage;
+  }
+
+  function goToFirstPage() {
+    currentPage = 1;
+    updateTable();
+  }
+
+  function goToPrevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      updateTable();
+    }
+  }
+
+  function goToNextPage() {
+    var totalPage = Math.ceil(totalRows / rowsPerPage);
+    if (currentPage < totalPage) {
+      currentPage++;
+      updateTable();
+    }
+  }
+
+  function goToLastPage() {
+    currentPage = Math.ceil(totalRows / rowsPerPage);
+    updateTable();
+  }
+
+  // Attach event listeners to pagination buttons
+  document.getElementById("firstPage").addEventListener("click", goToFirstPage);
+  document.getElementById("prevPage").addEventListener("click", goToPrevPage);
+  document.getElementById("nextPage").addEventListener("click", goToNextPage);
+  document.getElementById("lastPage").addEventListener("click", goToLastPage);
+
+  // Initialize the table with the first page
+  updateTable();
+</script>
+<script>
+  function calculateAge(dateOfBirth) {
+    const dob = new Date(dateOfBirth);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+</script>
+
+
+
+
+</body>
+
+</html>
